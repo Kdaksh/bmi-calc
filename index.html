@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+</head>
+<style>
+    body{
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: wheat;
+        
+    }
+    .wrapper{
+       padding: 20px;
+       border: 1px solid black;
+       border-radius: 20px;
+       background-color: white;
+       box-shadow: 3px 2px 10px rgb(114, 114, 114);
+    }
+    .btnRow{
+        display: flex;
+        justify-content: center;
+    }
+    .footer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        bottom: 2px;
+        font-size:2.2rem;
+    }
+    .form.hide{
+        display: none;
+    }
+    .results.hide{
+        display: none;
+      width:200px;
+      
+    }
+    .results{
+        height: 20rem;
+        width: 30rem;
+    }
+
+</style>
+<body>
+    <div class="wrapper">
+        
+      
+   <div class="form" id="form">
+    <h1 class="text-center mb-5"style="margin-bottom: 2.5rem;">BMI Calculator</h1>
+    <div class="input-group input-group-lg" style="margin-bottom: 2.5rem;">
+        
+        <input type="text" class="form-control" placeholder="Weight In KG" id="weight" aria-describedby="sizing-addon1">
+        <span class="input-group-addon" id="sizing-addon1">KG</span>
+      </div>
+      <div class="input-group input-group-lg" style="margin-bottom: 2.5rem;">
+        
+        <input type="text" class="form-control" id="height" placeholder="Height In CM" aria-describedby="sizing-addon1">
+        <span class="input-group-addon" id="sizing-addon1">CM</span>
+      </div>
+      <div class="btnRow">
+          <div class="btn btn-success" id="calc">Calculate</div>
+      </div>
+      
+      </div>
+      <div class="results hide" id="results">
+<h1 class="text-center"><u>Results</u></h1>
+
+<h1 class="bmi text-center" id="bmi">23.4</h1>
+<h3 class="statusBar text-center" style="margin-bottom: 2.5rem;"><b>Status:</b> <span class="resultStatus" id="status">Normal</span></h3>
+
+<div class="btnRow">
+    <div class="btn btn-success" id="clear">Clear</div>
+</div>
+    </div>
+
+   
+    </div>
+    <div class="footer">
+        Developed By &nbsp;<a href="https://github.com/kdaksh"> Daksh</a>
+    </div>
+    <script>
+let calc = document.querySelector('#calc')
+let clear = document.querySelector('#clear')
+calc.addEventListener('click',(e)=>{
+    let {height,weight} = {height:document.querySelector('#height').value,weight:document.querySelector('#weight').value}
+    if ((height=="") || (height=="")) {
+        alert('Please Fill The Form Correctly')
+    }
+    else{
+    let bmi = (weight/((height*height)/10000)).toFixed(2)
+    let resultsBox = document.querySelector('#results')
+    let status = ""
+    if (bmi < 18.5) {
+       status =  'Under Weight'
+    }
+  else  if (bmi < 24.9) {
+        status = "Normal"
+    }
+    else if( bmi < 30){
+        status = "Oveweight"
+    }
+    else if( bmi > 30){
+        status = "Obesity"
+    }
+    let statusHolder = document.querySelector('#status')
+    let form = document.querySelector('#form')
+    let bmiPlaceHolder = document.querySelector('#bmi')
+    bmiPlaceHolder.innerHTML = bmi
+    statusHolder.innerHTML = status
+    if (!(status == "Normal")) {
+        bmiPlaceHolder.style.color = "red"
+        statusHolder.style.color = "red"
+    }
+    else{
+        bmiPlaceHolder.style.color = "green"
+        statusHolder.style.color = "green"
+    }
+    form.classList.add('hide')
+    resultsBox.classList.remove('hide')
+    }
+})
+clear.addEventListener('click',(e)=>{
+    let form = document.querySelector('#form')
+    let resultsBox = document.querySelector('#results')
+    resultsBox.classList.add('hide')
+    form.classList.remove('hide')
+    document.querySelector('#height').value = ""
+    document.querySelector('#weight').value = ""
+
+})
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>
